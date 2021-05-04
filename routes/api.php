@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\PasswordResetRequestController;
+use App\Http\Controllers\Api\ChangePasswordController;
+
+
 
 use App\Http\Controllers\BrancheController;
 use App\Http\Controllers\TaskController;
@@ -63,7 +66,9 @@ Route::middleware(['api'])->group(function ($router) {
 
     Route::post('sendPasswordResetLink', [PasswordResetRequestController::class, 'sendEmail']);
 
+
     Route::post('resetPassword', [ChangePasswordController::class, 'passwordResetProcess']);
+
 
 
 });

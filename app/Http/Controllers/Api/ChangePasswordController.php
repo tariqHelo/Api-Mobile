@@ -2,19 +2,24 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 use App\Http\Requests\UpdatePasswordRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+
 class ChangePasswordController extends Controller
 {
-     public function passwordResetProcess(UpdatePasswordRequest $request){
-         //dd($request);
-        return $this->updatePasswordRow($request)->count() > 0 ?
-         $this->resetPassword($request) :
-          $this->tokenNotFoundError();
+    public function passwordResetProcess(Request $request){
+
+      $validator = \Validator::make($request->all(), [
+        'email' => 'required|email',
+        'password' => 'required|confirmed'
+      ]);
+        return $this->updatePasswordRow($request)->count() > 0 ? $this->resetPassword($request) :
+        $this->tokenNotFoundError();
       }
   
       // Verify if token is valid
@@ -49,3 +54,5 @@ class ChangePasswordController extends Controller
           ],Response::HTTP_CREATED);
       }    
 }
+// <a target="_blank" rel="noopener noreferrer"
+//     href="http://127.0.0.1:8000/response-password-reset?token=%242y%2410%24/xRB7TQNc0QcUTuzHXv4neGeVLna.CeE/RrryY8yNdsdp/.YsFBpC"
