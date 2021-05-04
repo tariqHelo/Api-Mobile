@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\BrancheResource;
+use App\Http\Resources\TasksResource;
+
 use App\Models\Branche;
+use App\Models\Task;
 
 class BrancheController extends Controller
 {
@@ -19,7 +22,7 @@ class BrancheController extends Controller
      */
     public function index()
     {  //dd(20);
-        return BrancheResource::collection(Branche::paginate(7));
+        return BrancheResource::collection(Branche::get());
     }
 
     /**
@@ -51,7 +54,7 @@ class BrancheController extends Controller
      */
     public function show($id)
     {
-        //
+        return new TasksResource($id);
     }
 
     /**

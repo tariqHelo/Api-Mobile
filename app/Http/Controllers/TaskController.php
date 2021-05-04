@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\BrancheResource;
 use App\Http\Resources\TasksResource;
+
+use App\Models\Branche;
 use App\Models\Task;
+
 class TaskController extends Controller
 {
     /**
@@ -14,7 +18,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-      return TasksResource::collection(Task::paginate(7));
+        return TasksResource::collection(Task::get());
     }
 
     /**
@@ -44,9 +48,11 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show(Task $id)
+    {   // dd($id);
+        return new TasksResource($id);
+
+       // return TasksResource::collection(Task::find($id));
     }
 
     /**
