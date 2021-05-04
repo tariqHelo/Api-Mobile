@@ -34,18 +34,18 @@ return [
     | Supported: "session", "token"
     |
     */
-
-    'guards' => [
+        'guards' => [
         'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
+        'driver' => 'session',
+        'provider' => 'users',
         ],
 
         'api' => [
-            'driver' => 'token',
-            'provider' => 'users',
-            'hash' => false,
+        'driver' => 'passport',//instead of token
+        'provider' => 'users',
+        'hash' => false,
         ],
+   
     ],
 
     /*
