@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\ChangePasswordController;
 use App\Http\Controllers\BrancheController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\PreparationController;
+use App\Http\Controllers\ProductController;
 
 use App\Http\Controllers\MailController;
 
@@ -36,40 +37,31 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-// Route::post('forgot-password', 'Api\AuthController@forgot_password');
-
-// Route::group(['middleware' => 'auth:api'], function () {
-// Route::post('change-password', 'Api\AuthController@change_password');
-// });
-
-Route::post('forgot-password', [ForgotPasswordController::class, 'forgot_password']);
-    //Route::post('change-password', [ForgotPasswordController::class, 'change_password']);
-   Route::post('sendmail', [MailController::class, 'sendEmail']);
+Route::post('sendmail', [MailController::class, 'sendEmail']);
 
 Route::middleware(['api'])->group(function ($router) {
    Route::post('register', [RegisterController::class, 'register']);
    Route::post('login', [RegisterController::class, 'login']);
    Route::post('logout', [RegisterController::class, 'logout']);
-
-   // Route::post('change-password', [ForgotPasswordController::class, 'change_password']);
+    
+    //profile
     Route::get('me', [RegisterController::class, 'me']);
 
-   ///branches
+    ///branches
     Route::get('branches',   [BrancheController::class, 'index']);
     Route::get('branches/{id}', [BrancheController::class, 'show']);
-   ///tasks
-   Route::get('mytask',       [TaskController::class, 'index']);
-   Route::get('mytask/{id}', [TaskController::class, 'show']);
-
+    ///tasks
+    Route::get('mytask',       [TaskController::class, 'index']);
+    Route::get('mytask/{id}', [TaskController::class, 'show']);
    ///preparation
-   Route::get('preparation', [PreparationController::class, 'index']);
+    Route::get('preparation', [PreparationController::class, 'index']);
+    ///products
+    Route::get('products', [ProductController::class, 'index']);
+    Route::get('product/{id}', [ProductController::class, 'show']);
+
 
     Route::post('sendPasswordResetLink', [PasswordResetRequestController::class, 'sendEmail']);
-
-
     Route::post('resetPassword', [ChangePasswordController::class, 'passwordResetProcess']);
-
-
 
 });
 

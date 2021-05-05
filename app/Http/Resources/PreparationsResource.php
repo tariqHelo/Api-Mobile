@@ -23,6 +23,6 @@ class PreparationsResource extends JsonResource
         'brand_id' => $this->brand->name,
         'created_at' => (string) $this->created_at,
         'updated_at' => (string) $this->updated_at,
-      ];
+        ];
      }
 }
