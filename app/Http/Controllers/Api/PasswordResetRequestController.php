@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 class PasswordResetRequestController extends Controller
 {
 
+    
  public function sendEmail(Request $request)  // this is most important function to send mail and inside of that there are another function
     {
         if (!$this->validateEmail($request->email)) {  // this is validate to fail send mail or true

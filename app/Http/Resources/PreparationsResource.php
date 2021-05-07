@@ -20,7 +20,7 @@ class PreparationsResource extends JsonResource
         'country_id' => $this->country->name,
         'city_id' => $this->city->name,
         'area_id' => $this->area->name,
-        'brand_id' => $this->brand->name,
+        'brand_id' => $this->brand->name ?? "",
         'created_at' => (string) $this->created_at,
         'updated_at' => (string) $this->updated_at,
         ];

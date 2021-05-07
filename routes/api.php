@@ -37,7 +37,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post('sendmail', [MailController::class, 'sendEmail']);
+Route::post('sendmail', [PasswordResetRequestController::class, 'sendEmail']);
 
 Route::middleware(['api'])->group(function ($router) {
    Route::post('register', [RegisterController::class, 'register']);
@@ -57,7 +57,7 @@ Route::middleware(['api'])->group(function ($router) {
     Route::get('preparation', [PreparationController::class, 'index']);
     ///products
     Route::get('products', [ProductController::class, 'index']);
-    Route::get('product/{id}', [ProductController::class, 'show']);
+    Route::get('products/{id}', [ProductController::class, 'show']);
 
 
     Route::post('sendPasswordResetLink', [PasswordResetRequestController::class, 'sendEmail']);
