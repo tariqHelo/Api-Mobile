@@ -12,7 +12,8 @@ class Task extends Model
     
     protected $table = "tasks";
 
-  protected $fillable = [];
+  protected $fillable = ['name' , 'type', 'user_id' , 'img' , 'country_id' , 'city_id' , 'area_id' , 'branch_id' , 'brand_id' ,
+  'time'];
 
      public function area()
     {

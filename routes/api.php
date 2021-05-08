@@ -52,7 +52,11 @@ Route::middleware(['api'])->group(function ($router) {
     Route::get('branches/{id}', [BrancheController::class, 'show']);
     ///tasks
     Route::get('mytask',       [TaskController::class, 'index']);
-    Route::get('mytask/{id}', [TaskController::class, 'show']);
+    Route::post('mytask',      [TaskController::class, 'store']);
+    Route::get('mytask/{id}',  [TaskController::class, 'show']);
+    Route::post('mytask/{id}', [TaskController::class, 'update']);
+//    Route::apiResource('mytask', TaskController::class)
+//    ->only('index' , 'store' , 'show' , 'update');
    ///preparation
     Route::get('preparation', [PreparationController::class, 'index']);
     ///products

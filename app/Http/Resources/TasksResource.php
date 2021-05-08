@@ -17,11 +17,14 @@ class TasksResource extends JsonResource
        return [
          'id' => $this->id,
          'name' => $this->name,
+         'img' => $this->img ?? "",
+         'type' => $this->type,
          'country_id' => $this->country->name,
          'city_id' => $this->city->name,
          'area_id' => $this->area->name,
          'brand_id' => $this->brand->name ?? "",
          'branch_id' => $this->branch->name ?? "",
+         'time' => $this->time ?? "",
          'created_at' => (string) $this->created_at,
          'updated_at' => (string) $this->updated_at,
         ];  

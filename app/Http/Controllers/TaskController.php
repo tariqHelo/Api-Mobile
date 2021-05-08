@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Resources\BrancheResource;
 use App\Http\Resources\TasksResource;
-
+use App\Http\Controllers\Api\BaseController as BaseController;
+use Storage;
 use App\Models\Branche;
 use App\Models\Task;
+use Validator;
 
-class TaskController extends Controller
+class TaskController extends BaseController
 {
+      public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +45,35 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $validator = Validator::make($request->all(),[
+            'name' =>'required',
+            'type' =>'required',
+            'img' =>'required:img',
+            'country_id' =>'required',
+            'city_id' =>'required',
+            'branch_id' =>'required',
+            'brand_id' =>'required',
+            'time' =>'required',
+        ]); 
+
+        if ($validator->fails()) {
+            return $this->sendError('Please validate error' ,$validator->errors() );
+        }
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+
+            $fileName = $image->getClientOriginalName();
+            $destinationPath = base_path() . '/public/uploads/images/Task/' . $fileName;
+            $image->move($destinationPath, $fileName);
+
+            $attributes['img'] = $fileName;
+        }
+        $input = $request->all();
+        $tasks = Task::create($input);
+        $success['tasks'] = $tasks;
+
+        return $this->sendResponse($success ,'Tasks Created successfully' );
+
     }
 
     /**
@@ -74,8 +108,35 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {  //dd($request->all());
+        
+        $validator = Validator::make($request->all(),[
+            'name' =>'required',
+            'type' =>'required',
+            'img' =>'required:img',
+            'country_id' =>'required',
+            'city_id' =>'required',
+            'area_id' =>'required',
+            'branch_id' =>'required',
+            'brand_id' =>'required',
+            'time' =>'required',
+        ]); 
+        if ($validator->fails()) {
+            return $this->sendError('Please validate error' ,$validator->errors() );
+        }
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+
+            $fileName = $image->getClientOriginalName();
+            $destinationPath = base_path() . '/public/uploads/images/Task/' . $fileName;
+            $image->move($destinationPath, $fileName);
+
+            $attributes['img'] = $fileName;
+        }
+        $input = Task::find($id);
+        $input->update($request->all());
+        $success['input'] = $input;
+        return $this->sendResponse($success ,'Tasks Updatedd successfully' );
     }
 
     /**

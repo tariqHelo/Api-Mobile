@@ -14,7 +14,7 @@ class RegisterController extends BaseController
 {
      public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login' , 'register']]);
     }
 
     public function register(Request $request)
@@ -62,8 +62,21 @@ class RegisterController extends BaseController
      return response()->json(auth()->user());
     }
 
-    public function logout() {
-        auth()->logout();
-        return $this->respondWithMessage('User successfully logged out');
-    }
+    // public function logout() {
+    //   //  dd(20);
+    //     auth()->logout();
+    //     return $this->sendResponse('User successfully logged out');
+    // }
+
+    public function logout()
+        { 
+            if (Auth::check()) {
+            Auth::user()->AauthAcessToken()->delete();
+             return response()->json([
+             'message' => 'Successfully logged out'
+             ]);
+            }
+       // return $this->sendResponse('User successfully logged out');
+
+        }
 }
