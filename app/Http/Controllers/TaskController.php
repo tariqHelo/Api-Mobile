@@ -13,10 +13,7 @@ use Validator;
 
 class TaskController extends BaseController
 {
-      public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
+   
     /**
      * Display a listing of the resource.
      *
@@ -57,19 +54,19 @@ class TaskController extends BaseController
         ]); 
 
         if ($validator->fails()) {
-            return $this->sendError('Please validate error' ,$validator->errors() );
+            return $this->sendError('Please validate error' ,$validator->errors());
         }
         if ($request->hasFile('img')) {
-            $image = $request->file('img');
 
-            $fileName = $image->getClientOriginalName();
-            $destinationPath = base_path() . '/public/uploads/images/Task/' . $fileName;
-            $image->move($destinationPath, $fileName);
-
-            $attributes['img'] = $fileName;
+          $file=$request->file('img');
+          $name='brands/'.uniqid().'.'.$file->extension();
+          dd($name);
+          $file->storePubliclyAs('public',$name);
+          $data['img']=$name;
         }
-        $input = $request->all();
-        $tasks = Task::create($input);
+        $data = $request->all();
+        $tasks = Task::create($data);
+
         $success['tasks'] = $tasks;
 
         return $this->sendResponse($success ,'Tasks Created successfully' );
@@ -124,18 +121,17 @@ class TaskController extends BaseController
         if ($validator->fails()) {
             return $this->sendError('Please validate error' ,$validator->errors() );
         }
-        if ($request->hasFile('img')) {
-            $image = $request->file('img');
+       if ($request->hasFile('img')) {
 
-            $fileName = $image->getClientOriginalName();
-            $destinationPath = base_path() . '/public/uploads/images/Task/' . $fileName;
-            $image->move($destinationPath, $fileName);
-
-            $attributes['img'] = $fileName;
+          $file=$request->file('photo');
+          $name='brands/'.uniqid().'.'.$file->extension();
+          $file->storePubliclyAs('public',$name);
+          $data['photo']=$name;
         }
-        $input = Task::find($id);
-        $input->update($request->all());
-        $success['input'] = $input;
+        $data = $request->all();
+        $tasks = Task::update($data);
+        $success['tasks'] = $tasks;
+       // $success['input'] = $input;
         return $this->sendResponse($success ,'Tasks Updatedd successfully' );
     }
 

@@ -17,8 +17,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MailController;
 
 
-
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,19 +27,20 @@ use App\Http\Controllers\MailController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 
+
 Route::post('sendmail', [PasswordResetRequestController::class, 'sendEmail']);
 
+Route::post('login', [RegisterController::class, 'login']);
+
+Route::post('register', [RegisterController::class, 'register']);
+
+
 Route::middleware(['api'])->group(function ($router) {
-   Route::post('register', [RegisterController::class, 'register']);
-   Route::post('login', [RegisterController::class, 'login']);
    Route::post('logout', [RegisterController::class, 'logout']);
     
     //profile
@@ -55,8 +54,6 @@ Route::middleware(['api'])->group(function ($router) {
     Route::post('mytask',      [TaskController::class, 'store']);
     Route::get('mytask/{id}',  [TaskController::class, 'show']);
     Route::post('mytask/{id}', [TaskController::class, 'update']);
-//    Route::apiResource('mytask', TaskController::class)
-//    ->only('index' , 'store' , 'show' , 'update');
    ///preparation
     Route::get('preparation', [PreparationController::class, 'index']);
     ///products
@@ -68,15 +65,3 @@ Route::middleware(['api'])->group(function ($router) {
     Route::post('resetPassword', [ChangePasswordController::class, 'passwordResetProcess']);
 
 });
-
-
-
-
-
-
-
-
-
-
-// <a target="_blank" rel="noopener noreferrer"
-//     href="http://127.0.0.1:8000/response-password-reset?token=%242y%2410%24/xRB7TQNc0QcUTuzHXv4neGeVLna.CeE/RrryY8yNdsdp/.YsFBpC"
